@@ -1,6 +1,6 @@
 import { Globe } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import logo from '../../imports/hcmut.png';
+import logo from '../imports/hcmut.png';
 
 export function MobileHeader() {
   const { language, setLanguage, t } = useLanguage();

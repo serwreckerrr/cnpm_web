@@ -2,7 +2,14 @@ import { useState } from 'react';
 import { Settings as SettingsIcon, DollarSign, Database, Users, Bell, Globe, HelpCircle, LogOut, ChevronRight, Save, RefreshCw, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
-export function SettingsScreen() {
+
+interface SettingsScreenProps {
+  onLogout: () => void;
+}
+
+export function SettingsScreen({
+  onLogout,
+}: SettingsScreenProps) {
   const { t, language, setLanguage } = useLanguage();
   const [activeSection, setActiveSection] = useState<'main' | 'pricing' | 'sync' | 'profile'>('main');
   const [syncing, setSyncing] = useState(false);
@@ -438,7 +445,10 @@ export function SettingsScreen() {
           </button>
         </div>
 
-        <button className="w-full bg-white border border-[#dc2626]/20 text-[#dc2626] rounded-lg px-4 py-3 flex items-center justify-center gap-2 hover:bg-[#fee2e2] transition-colors">
+        <button
+          onClick={onLogout}
+          className="w-full bg-white border border-[#dc2626]/20 text-[#dc2626] rounded-lg px-4 py-3 flex items-center justify-center gap-2 hover:bg-[#fee2e2] transition-colors"
+        >
           <LogOut className="w-5 h-5" />
           <span>{t('logout')}</span>
         </button>

@@ -1,0 +1,30 @@
+1. Tải Node.js
+
+Vào:
+
+https://nodejs.org/en/download
+
+Tải:
+
+Windows Installer (.msi)
+bản LTS
+2. Cài đặt
+
+Khi setup:
+
+cứ Next
+nhớ giữ tick:
+Add to PATH
+
+rồi Install.
+
+
+
+2.các thư viện
+npm install
+npm install react-router-dom
+npm install axios
+npm install framer-motion
+npm install lucide-react
+npm install -D tailwindcss @tailwindcss/vite
+npm install framer-motion lucide-react

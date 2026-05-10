@@ -17,7 +17,7 @@ export function TransactionsScreen() {
   const monthlyBills = [
     {
       id: '1',
-      month: 'Tháng 4/2026',
+      month: '4/2026',
       period: '01/04 - 11/04',
       trips: 8,
       amount: 120000,
@@ -26,7 +26,7 @@ export function TransactionsScreen() {
     },
     {
       id: '2',
-      month: 'Tháng 3/2026',
+      month: '3/2026',
       period: '01/03 - 31/03',
       trips: 15,
       amount: 225000,
@@ -35,7 +35,7 @@ export function TransactionsScreen() {
     },
     {
       id: '3',
-      month: 'Tháng 2/2026',
+      month: '2/2026',
       period: '01/02 - 28/02',
       trips: 14,
       amount: 210000,
@@ -132,7 +132,7 @@ export function TransactionsScreen() {
             {bill.status === 'pending' && (
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 mb-4 flex items-center gap-2 text-sm">
                 <Clock className="w-4 h-4" />
-                <span>Hạn thanh toán: {bill.dueDate}</span>
+                <span>{t('due')}: {bill.dueDate}</span>
               </div>
             )}
 
@@ -156,7 +156,7 @@ export function TransactionsScreen() {
 
           <div className="bg-white rounded-lg border border-border overflow-hidden">
             <div className="px-4 py-3 border-b border-border">
-              <h4 className="text-sm">Chi tiết lượt gửi xe</h4>
+              <h4 className="text-sm">{t('parkingtripdetails')}</h4>
             </div>
             <div className="divide-y divide-border">
               {recentTransactions.slice(0, bill.trips).map((tx, idx) => (
@@ -250,7 +250,7 @@ export function TransactionsScreen() {
                   'bg-[#fee2e2] text-[#991b1b]'
                 }`}>
                   {bill.status === 'paid' ? `${t('paid')} - ${bill.paidDate}` :
-                   bill.status === 'pending' ? `${t('pending')} - Hạn: ${bill.dueDate}` :
+                   bill.status === 'pending' ? `${t('pending')} - ${t('due')}: ${bill.dueDate}` :
                    t('failed')}
                 </div>
               </button>

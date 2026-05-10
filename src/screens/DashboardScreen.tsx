@@ -112,7 +112,7 @@ export function DashboardScreen() {
 
         <div className="bg-white rounded-lg border border-border p-4">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm">{t('revenueTrend')} (kVND)</h3>
+            <h3 className="text-sm">{t('revenueTrend')} ({t('thousand')} VND)</h3>
             <span className="text-xs text-muted-foreground">{t('hourly')}</span>
           </div>
           <ResponsiveContainer width="100%" height={180}>

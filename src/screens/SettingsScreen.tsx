@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Settings as SettingsIcon, DollarSign, Database, Users, Bell, Globe, HelpCircle, LogOut, ChevronRight, Save, RefreshCw, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
-
 interface SettingsScreenProps {
   onLogout: () => void;
 }
@@ -37,7 +36,7 @@ export function SettingsScreen({
   };
 
   const handleSavePricing = () => {
-    alert('Đã lưu cấu hình giá thành công!');
+    alert(t('saveConfigSuccess'));
     setActiveSection('main');
   };
 
@@ -54,12 +53,12 @@ export function SettingsScreen({
 
           <div>
             <h2 className="text-lg mb-1">{t('configurePricing')}</h2>
-            <p className="text-sm text-muted-foreground">Cấu hình chính sách giá cho từng đối tượng</p>
+            <p className="text-sm text-muted-foreground">{t('configurePricingDesc')}</p>
           </div>
 
           <div className="bg-white rounded-lg border border-border overflow-hidden">
             <div className="px-4 py-3 border-b border-border bg-muted/30">
-              <h3 className="text-sm">Giá gửi xe theo đối tượng</h3>
+              <h3 className="text-sm">{t('pricingByTarget')}</h3>
             </div>
 
             <div className="divide-y divide-border">
@@ -67,10 +66,10 @@ export function SettingsScreen({
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <p className="text-sm font-medium">{t('student')}</p>
-                    <p className="text-xs text-muted-foreground">Sinh viên, học viên, nghiên cứu sinh</p>
+                    <p className="text-xs text-muted-foreground">{t('studentDesc')}</p>
                   </div>
                   <div className="px-2 py-1 bg-primary/10 text-primary rounded text-xs">
-                    Định kỳ
+                    {t('periodic')}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -81,7 +80,7 @@ export function SettingsScreen({
                     className="flex-1 px-3 py-2 border border-border rounded-lg text-sm"
                     step="1000"
                   />
-                  <span className="text-sm text-muted-foreground">₫/ngày</span>
+                  <span className="text-sm text-muted-foreground">{t('vndPerDay')}</span>
                 </div>
               </div>
 
@@ -89,10 +88,10 @@ export function SettingsScreen({
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <p className="text-sm font-medium">{t('lecturer')}</p>
-                    <p className="text-xs text-muted-foreground">Giảng viên</p>
+                    <p className="text-xs text-muted-foreground">{t('lecturerDesc')}</p>
                   </div>
                   <div className="px-2 py-1 bg-[#10b981]/10 text-[#10b981] rounded text-xs">
-                    Miễn phí
+                    {t('free')}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -103,7 +102,7 @@ export function SettingsScreen({
                     className="flex-1 px-3 py-2 border border-border rounded-lg text-sm"
                     step="1000"
                   />
-                  <span className="text-sm text-muted-foreground">₫/ngày</span>
+                  <span className="text-sm text-muted-foreground">{t('vndPerDay')}</span>
                 </div>
               </div>
 
@@ -111,10 +110,10 @@ export function SettingsScreen({
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <p className="text-sm font-medium">{t('staff')}</p>
-                    <p className="text-xs text-muted-foreground">Cán bộ, nhân viên</p>
+                    <p className="text-xs text-muted-foreground">{t('staffDesc')}</p>
                   </div>
                   <div className="px-2 py-1 bg-[#10b981]/10 text-[#10b981] rounded text-xs">
-                    Miễn phí
+                    {t('free')}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -125,7 +124,7 @@ export function SettingsScreen({
                     className="flex-1 px-3 py-2 border border-border rounded-lg text-sm"
                     step="1000"
                   />
-                  <span className="text-sm text-muted-foreground">₫/ngày</span>
+                  <span className="text-sm text-muted-foreground">{t('vndPerDay')}</span>
                 </div>
               </div>
 
@@ -133,10 +132,10 @@ export function SettingsScreen({
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <p className="text-sm font-medium">{t('visitor')}</p>
-                    <p className="text-xs text-muted-foreground">Khách vãng lai</p>
+                    <p className="text-xs text-muted-foreground">{t('visitorDesc')}</p>
                   </div>
                   <div className="px-2 py-1 bg-[#f59e0b]/10 text-[#f59e0b] rounded text-xs">
-                    Theo giờ
+                    {t('byHour')}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -147,7 +146,7 @@ export function SettingsScreen({
                     className="flex-1 px-3 py-2 border border-border rounded-lg text-sm"
                     step="1000"
                   />
-                  <span className="text-sm text-muted-foreground">₫/giờ</span>
+                  <span className="text-sm text-muted-foreground">{t('vndPerHour')}</span>
                 </div>
               </div>
             </div>
@@ -159,8 +158,8 @@ export function SettingsScreen({
                 <Bell className="w-5 h-5" />
               </div>
               <div className="text-sm text-[#92400e]">
-                <p className="font-medium mb-1">Lưu ý</p>
-                <p className="text-xs">Thay đổi chính sách giá sẽ được áp dụng từ chu kỳ thanh toán tiếp theo. Chu kỳ hiện tại vẫn giữ nguyên mức giá cũ.</p>
+                <p className="font-medium mb-1">{t('note')}</p>
+                <p className="text-xs">{t('pricingNoteDesc')}</p>
               </div>
             </div>
           </div>
@@ -170,7 +169,7 @@ export function SettingsScreen({
             className="w-full bg-primary text-primary-foreground rounded-lg px-4 py-3 flex items-center justify-center gap-2 font-medium"
           >
             <Save className="w-5 h-5" />
-            <span>Lưu cấu hình</span>
+            <span>{t('saveConfig')}</span>
           </button>
         </div>
       </div>
@@ -189,8 +188,8 @@ export function SettingsScreen({
           </button>
 
           <div>
-            <h2 className="text-lg mb-1">Đồng bộ dữ liệu</h2>
-            <p className="text-sm text-muted-foreground">Đồng bộ thông tin từ HCMUT_DATACORE</p>
+            <h2 className="text-lg mb-1">{t('syncData')}</h2>
+            <p className="text-sm text-muted-foreground">{t('syncDataDesc')}</p>
           </div>
 
           <div className="bg-gradient-to-br from-primary to-[#0052a3] rounded-2xl p-6 text-white">
@@ -199,13 +198,13 @@ export function SettingsScreen({
                 <Database className="w-8 h-8" />
               </div>
               <h3 className="text-lg mb-1">HCMUT_DATACORE</h3>
-              <p className="text-sm text-white/80">Hệ thống dữ liệu trung tâm</p>
+              <p className="text-sm text-white/80">{t('centralDataSystem')}</p>
             </div>
 
             {syncing && (
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center mb-4">
                 <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-3" />
-                <p className="text-sm">Đang đồng bộ dữ liệu...</p>
+                <p className="text-sm">{t('syncingData')}</p>
               </div>
             )}
 
@@ -214,8 +213,8 @@ export function SettingsScreen({
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-8 h-8" />
                   <div>
-                    <p className="font-medium">Đồng bộ thành công!</p>
-                    <p className="text-sm text-white/90">Đã cập nhật 2,847 bản ghi</p>
+                    <p className="font-medium">{t('syncSuccess')}</p>
+                    <p className="text-sm text-white/90">{t('updated')} 2,847 {t('records')}</p>
                   </div>
                 </div>
               </div>
@@ -227,14 +226,14 @@ export function SettingsScreen({
                 className="w-full bg-white text-primary rounded-xl px-4 py-4 flex items-center justify-center gap-2 font-medium"
               >
                 <RefreshCw className="w-5 h-5" />
-                <span>Đồng bộ ngay</span>
+                <span>{t('syncNow')}</span>
               </button>
             )}
           </div>
 
           <div className="bg-white rounded-lg border border-border overflow-hidden">
             <div className="px-4 py-3 border-b border-border bg-muted/30">
-              <h3 className="text-sm">Lịch sử đồng bộ</h3>
+              <h3 className="text-sm">{t('syncHistory')}</h3>
             </div>
 
             <div className="divide-y divide-border">
@@ -242,30 +241,30 @@ export function SettingsScreen({
                 <div className="flex items-center justify-between mb-1">
                   <p className="text-sm font-medium">11/04/2026 08:00</p>
                   <div className="px-2 py-0.5 bg-[#10b981]/10 text-[#10b981] rounded text-xs">
-                    Thành công
+                    {t('success')}
                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground">2,847 bản ghi • Tự động</p>
+                <p className="text-xs text-muted-foreground">2,847 {t('records')} • {t('auto')}</p>
               </div>
 
               <div className="px-4 py-3">
                 <div className="flex items-center justify-between mb-1">
                   <p className="text-sm font-medium">10/04/2026 08:00</p>
                   <div className="px-2 py-0.5 bg-[#10b981]/10 text-[#10b981] rounded text-xs">
-                    Thành công
+                    {t('success')}
                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground">2,845 bản ghi • Tự động</p>
+                <p className="text-xs text-muted-foreground">2,845 {t('records')} • {t('auto')}</p>
               </div>
 
               <div className="px-4 py-3">
                 <div className="flex items-center justify-between mb-1">
                   <p className="text-sm font-medium">09/04/2026 08:00</p>
                   <div className="px-2 py-0.5 bg-[#10b981]/10 text-[#10b981] rounded text-xs">
-                    Thành công
+                    {t('success')}
                   </div>
                 </div>
-                <p className="text-xs text-muted-foreground">2,843 bản ghi • Tự động</p>
+                <p className="text-xs text-muted-foreground">2,843 {t('records')} • {t('auto')}</p>
               </div>
             </div>
           </div>
@@ -276,8 +275,8 @@ export function SettingsScreen({
                 <Database className="w-5 h-5" />
               </div>
               <div className="text-sm text-primary">
-                <p className="font-medium mb-1">Chế độ chỉ đọc</p>
-                <p className="text-xs">Hệ thống chỉ có quyền đọc dữ liệu từ DATACORE. Không thể chỉnh sửa thông tin người dùng.</p>
+                <p className="font-medium mb-1">{t('readOnlyMode')}</p>
+                <p className="text-xs">{t('readOnlyDesc')}</p>
               </div>
             </div>
           </div>
@@ -310,24 +309,24 @@ export function SettingsScreen({
 
           <div className="bg-white rounded-lg border border-border overflow-hidden divide-y divide-border">
             <div className="px-4 py-3">
-              <p className="text-xs text-muted-foreground mb-1">Họ tên</p>
+              <p className="text-xs text-muted-foreground mb-1">{t('name')}</p>
               <p className="text-sm">Phạm Đình Phong</p>
             </div>
             <div className="px-4 py-3">
-              <p className="text-xs text-muted-foreground mb-1">MSSV</p>
+              <p className="text-xs text-muted-foreground mb-1">{t('studentIdOnly')}</p>
               <p className="text-sm">2312628</p>
             </div>
             <div className="px-4 py-3">
-              <p className="text-xs text-muted-foreground mb-1">Khoa</p>
-              <p className="text-sm">Khoa Khoa học & Kỹ thuật Máy tính</p>
+              <p className="text-xs text-muted-foreground mb-1">{t('faculty')}</p>
+              <p className="text-sm">{t('cseFaculty')}</p>
             </div>
             <div className="px-4 py-3">
-              <p className="text-xs text-muted-foreground mb-1">Email</p>
+              <p className="text-xs text-muted-foreground mb-1">{t('email')}</p>
               <p className="text-sm">phong.phamdinh@hcmut.edu.vn</p>
             </div>
             <div className="px-4 py-3">
-              <p className="text-xs text-muted-foreground mb-1">Tài khoản BKPay</p>
-              <p className="text-sm text-[#10b981]">Đã liên kết</p>
+              <p className="text-xs text-muted-foreground mb-1">{t('bkpayAccount')}</p>
+              <p className="text-sm text-[#10b981]">{t('linked')}</p>
             </div>
           </div>
         </div>
@@ -340,7 +339,7 @@ export function SettingsScreen({
       <div className="p-4 space-y-4">
         <div>
           <h2 className="text-lg mb-1">{t('settings')}</h2>
-          <p className="text-sm text-muted-foreground">Cấu hình và quản trị hệ thống</p>
+          <p className="text-sm text-muted-foreground">{t('settingsDesc')}</p>
         </div>
 
         <div className="bg-white rounded-lg border border-border overflow-hidden divide-y divide-border">
@@ -353,7 +352,7 @@ export function SettingsScreen({
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium">{t('profile')}</p>
-              <p className="text-xs text-muted-foreground">Thông tin cá nhân</p>
+              <p className="text-xs text-muted-foreground">{t('profileDesc')}</p>
             </div>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </button>
@@ -367,7 +366,7 @@ export function SettingsScreen({
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium">{t('configurePricing')}</p>
-              <p className="text-xs text-muted-foreground">Chính sách giá gửi xe</p>
+              <p className="text-xs text-muted-foreground">{t('pricingPolicyDesc')}</p>
             </div>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </button>
@@ -380,7 +379,7 @@ export function SettingsScreen({
               <Database className="w-5 h-5 text-primary" />
             </div>
             <div className="flex-1 text-left">
-              <p className="text-sm font-medium">Đồng bộ dữ liệu</p>
+              <p className="text-sm font-medium">{t('syncData')}</p>
               <p className="text-xs text-muted-foreground">HCMUT_DATACORE</p>
             </div>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
@@ -428,7 +427,7 @@ export function SettingsScreen({
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium">{t('notifications')}</p>
-              <p className="text-xs text-muted-foreground">Quản lý thông báo</p>
+              <p className="text-xs text-muted-foreground">{t('notificationsDesc')}</p>
             </div>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </button>
@@ -439,7 +438,7 @@ export function SettingsScreen({
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium">{t('help')}</p>
-              <p className="text-xs text-muted-foreground">Hướng dẫn sử dụng</p>
+              <p className="text-xs text-muted-foreground">{t('helpDesc')}</p>
             </div>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </button>

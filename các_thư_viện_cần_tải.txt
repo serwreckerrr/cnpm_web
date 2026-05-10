@@ -28,3 +28,8 @@ npm install framer-motion
 npm install lucide-react
 npm install -D tailwindcss @tailwindcss/vite
 npm install framer-motion lucide-react
+
+
+
+3.run
+npm run dev

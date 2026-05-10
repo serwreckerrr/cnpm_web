@@ -211,7 +211,7 @@ export function ParkingScreen() {
           </div>
 
           <div className="bg-white rounded-lg border border-border p-4">
-            <h4 className="text-sm mb-3">Mô phỏng thẻ</h4>
+            <h4 className="text-sm mb-3">{t('ticketinfo')}</h4>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">{t('name')}:</span>
@@ -252,7 +252,7 @@ export function ParkingScreen() {
               <MapPin className="w-5 h-5 text-white/70" />
             </div>
             <h3 className="text-lg mb-1">{t('enterNow')}</h3>
-            <p className="text-sm text-white/80">Quét thẻ để vào bãi xe</p>
+            <p className="text-sm text-white/80">{t('scantogoin')}</p>
           </button>
 
           <button
@@ -266,7 +266,7 @@ export function ParkingScreen() {
               <MapPin className="w-5 h-5 text-white/70" />
             </div>
             <h3 className="text-lg mb-1">{t('exitNow')}</h3>
-            <p className="text-sm text-white/80">Quét thẻ để ra khỏi bãi</p>
+            <p className="text-sm text-white/80">{t('scantogoout')}</p>
           </button>
 
           <button
@@ -279,7 +279,7 @@ export function ParkingScreen() {
               </div>
             </div>
             <h3 className="text-lg mb-1">{t('issueTemporaryTicket')}</h3>
-            <p className="text-sm text-primary/70">Dành cho khách vãng lai</p>
+            <p className="text-sm text-primary/70">{t('forguests')}</p>
           </button>
         </div>
 

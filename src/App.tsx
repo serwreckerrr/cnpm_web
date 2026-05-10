@@ -57,6 +57,14 @@ import { TransactionsScreen } from './screens/TransactionScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { LoginScreen } from './screens/LoginScreen';
 
+interface User {
+  name: string;
+  studentId: string;
+  role: string;
+  email: string;
+  faculty: string;
+  isGuest: boolean;
+}
 
 function MobileApp() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -64,19 +72,49 @@ function MobileApp() {
   // login state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // current user
+  const [currentUser, setCurrentUser] = useState<User>({
+    name: '',
+    studentId: '',
+    role: '',
+    email: '',
+    faculty: '',
+    isGuest: true,
+  });
+
   // xử lý login
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+const handleLogin = (user: User) => {
+  setCurrentUser(user);
+  setIsLoggedIn(true);
+};
 
   // xử lý guest login
   const handleGuestLogin = () => {
+    setCurrentUser({
+      name: 'Guest',
+      studentId: 'N/A',
+      role: 'guest',
+      email: 'guest@hcmut.edu.vn',
+      faculty: 'Guest User',
+      isGuest: true,
+    });
+
     setIsLoggedIn(true);
   };
 
   // xử lý logout
   const handleLogout = () => {
     setIsLoggedIn(false);
+
+    setCurrentUser({
+      name: '',
+      studentId: '',
+      role: '',
+      email: '',
+      faculty: '',
+      isGuest: true,
+    });
+
     setActiveTab('dashboard');
   };
 
@@ -96,15 +134,24 @@ function MobileApp() {
         return <DashboardScreen />;
 
       case 'parking':
-        return <ParkingScreen />;
+        return (
+          <ParkingScreen
+            user={currentUser}
+          />
+        );
 
       case 'transactions':
-        return <TransactionsScreen />;
+        return (
+          <TransactionsScreen
+            user={currentUser}
+          />
+        );
 
       case 'settings':
         return (
           <SettingsScreen
             onLogout={handleLogout}
+            user={currentUser}
           />
         );
 

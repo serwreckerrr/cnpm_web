@@ -1,9 +1,28 @@
 import { useState } from 'react';
-import { CreditCard, MapPin, ArrowRight, ArrowLeft, CheckCircle, XCircle, Ticket, Printer } from 'lucide-react';
+import {
+  CreditCard,
+  MapPin,
+  ArrowRight,
+  ArrowLeft,
+  CheckCircle,
+  XCircle,
+  Ticket,
+  Printer
+} from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
-export function ParkingScreen() {
+interface ParkingScreenProps {
+  user: {
+    name: string;
+    studentId: string;
+    role: string;
+    isGuest: boolean;
+  };
+}
+
+export function ParkingScreen({ user }: ParkingScreenProps) {
   const { t } = useLanguage();
+
   const [activeAction, setActiveAction] = useState<'entry' | 'exit' | 'temp' | null>(null);
   const [scanning, setScanning] = useState(false);
   const [scanResult, setScanResult] = useState<'success' | 'error' | null>(null);
@@ -22,6 +41,7 @@ export function ParkingScreen() {
 
     setTimeout(() => {
       const lot = parkingLots.find(l => l.id === selectedLot);
+
       if (activeAction === 'entry' && lot && lot.available > 0) {
         setScanResult('success');
       } else if (activeAction === 'entry' && lot && lot.available === 0) {
@@ -31,6 +51,7 @@ export function ParkingScreen() {
       } else {
         setScanResult('error');
       }
+
       setScanning(false);
     }, 2000);
   };
@@ -55,39 +76,68 @@ export function ParkingScreen() {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Ticket className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-primary mb-1">{t('temporaryTicket')}</h3>
-              <p className="text-sm text-muted-foreground">{t('issueTicket')}</p>
+
+              <h3 className="text-primary mb-1">
+                {t('temporaryTicket')}
+              </h3>
+
+              <p className="text-sm text-muted-foreground">
+                {t('issueTicket')}
+              </p>
             </div>
 
             <div className="space-y-3 mb-4">
               <div className="bg-muted rounded-lg p-3">
-                <p className="text-xs text-muted-foreground mb-1">{t('ticketNumber')}</p>
-                <p className="text-lg">TEMP-2026-{Math.floor(Math.random() * 10000).toString().padStart(4, '0')}</p>
+                <p className="text-xs text-muted-foreground mb-1">
+                  {t('ticketNumber')}
+                </p>
+
+                <p className="text-lg">
+                  TEMP-2026-{Math.floor(Math.random() * 10000).toString().padStart(4, '0')}
+                </p>
               </div>
 
               <div className="bg-muted rounded-lg p-3">
-                <p className="text-xs text-muted-foreground mb-1">{t('issueTime')}</p>
-                <p className="text-lg">{new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</p>
+                <p className="text-xs text-muted-foreground mb-1">
+                  {t('issueTime')}
+                </p>
+
+                <p className="text-lg">
+                  {new Date().toLocaleTimeString('vi-VN', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </p>
               </div>
 
               <div className="bg-muted rounded-lg p-3">
-                <p className="text-xs text-muted-foreground mb-1">{t('parkingLot')}</p>
+                <p className="text-xs text-muted-foreground mb-1">
+                  {t('parkingLot')}
+                </p>
+
                 <select
                   value={selectedLot}
                   onChange={(e) => setSelectedLot(e.target.value)}
                   className="w-full bg-white border border-border rounded-lg px-3 py-2 text-sm"
                 >
-                  {parkingLots.filter(l => l.available > 0).map(lot => (
-                    <option key={lot.id} value={lot.id}>
-                      {lot.name} - {lot.available} {t('available')}
-                    </option>
-                  ))}
+                  {parkingLots
+                    .filter(l => l.available > 0)
+                    .map(lot => (
+                      <option key={lot.id} value={lot.id}>
+                        {lot.name} - {lot.available} {t('available')}
+                      </option>
+                    ))}
                 </select>
               </div>
 
               <div className="bg-muted rounded-lg p-3">
-                <p className="text-xs text-muted-foreground mb-1">{t('validUntil')}</p>
-                <p className="text-lg">24 {t('hourly')}</p>
+                <p className="text-xs text-muted-foreground mb-1">
+                  {t('validUntil')}
+                </p>
+
+                <p className="text-lg">
+                  24 {t('hourly')}
+                </p>
               </div>
             </div>
 
@@ -131,21 +181,34 @@ export function ParkingScreen() {
                   <ArrowLeft className="w-10 h-10" />
                 )}
               </div>
+
               <h3 className="text-xl mb-2">
-                {activeAction === 'entry' ? t('enterNow') : t('exitNow')}
+                {activeAction === 'entry'
+                  ? t('enterNow')
+                  : t('exitNow')}
               </h3>
-              <p className="text-sm text-white/80">{t('scanCardEntry')}</p>
+
+              <p className="text-sm text-white/80">
+                {t('scanCardEntry')}
+              </p>
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-4">
-              <p className="text-xs text-white/70 mb-2">{t('selectLot')}</p>
+              <p className="text-xs text-white/70 mb-2">
+                {t('selectLot')}
+              </p>
+
               <select
                 value={selectedLot}
                 onChange={(e) => setSelectedLot(e.target.value)}
                 className="w-full bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg px-3 py-2 text-white"
               >
                 {parkingLots.map(lot => (
-                  <option key={lot.id} value={lot.id} className="text-foreground">
+                  <option
+                    key={lot.id}
+                    value={lot.id}
+                    className="text-foreground"
+                  >
                     {lot.name} - {lot.available} {t('available')}
                   </option>
                 ))}
@@ -155,7 +218,10 @@ export function ParkingScreen() {
             {scanning && (
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
                 <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-3" />
-                <p className="text-sm">Đang xác thực...</p>
+
+                <p className="text-sm">
+                  Đang xác thực...
+                </p>
               </div>
             )}
 
@@ -163,10 +229,16 @@ export function ParkingScreen() {
               <div className="bg-[#10b981] rounded-xl p-4 mb-4">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="w-8 h-8" />
+
                   <div>
-                    <p className="font-medium">{t('success')}!</p>
+                    <p className="font-medium">
+                      {t('success')}!
+                    </p>
+
                     <p className="text-sm text-white/90">
-                      {activeAction === 'entry' ? t('gateOpening') : 'Tính phí: 15,000₫'}
+                      {activeAction === 'entry'
+                        ? t('gateOpening')
+                        : 'Tính phí: 15,000₫'}
                     </p>
                   </div>
                 </div>
@@ -177,10 +249,16 @@ export function ParkingScreen() {
               <div className="bg-[#dc2626] rounded-xl p-4 mb-4">
                 <div className="flex items-center gap-3">
                   <XCircle className="w-8 h-8" />
+
                   <div>
-                    <p className="font-medium">{t('error')}!</p>
+                    <p className="font-medium">
+                      {t('error')}!
+                    </p>
+
                     <p className="text-sm text-white/90">
-                      {activeAction === 'entry' ? t('noSpaceAvailable') : t('cardRejected')}
+                      {activeAction === 'entry'
+                        ? t('noSpaceAvailable')
+                        : t('cardRejected')}
                     </p>
                   </div>
                 </div>
@@ -211,19 +289,37 @@ export function ParkingScreen() {
           </div>
 
           <div className="bg-white rounded-lg border border-border p-4">
-            <h4 className="text-sm mb-3">{t('ticketinfo')}</h4>
+            <h4 className="text-sm mb-3">
+              {t('ticketinfo')}
+            </h4>
+
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">{t('name')}:</span>
-                <span>Phạm Đình Phong</span>
+                <span className="text-muted-foreground">
+                  {t('name')}:
+                </span>
+
+                <span>{user.name}</span>
               </div>
+
               <div className="flex justify-between">
-                <span className="text-muted-foreground">{t('studentId')}:</span>
-                <span>2312628</span>
+                <span className="text-muted-foreground">
+                  {t('studentId')}:
+                </span>
+
+                <span>
+                  {user.studentId || '-'}
+                </span>
               </div>
+
               <div className="flex justify-between">
-                <span className="text-muted-foreground">{t('role')}:</span>
-                <span className="px-2 py-0.5 bg-primary/10 text-primary rounded text-xs">{t('student')}</span>
+                <span className="text-muted-foreground">
+                  {t('role')}:
+                </span>
+
+                <span className="px-2 py-0.5 bg-primary/10 text-primary rounded text-xs">
+                  {user.role}
+                </span>
               </div>
             </div>
           </div>
@@ -236,8 +332,13 @@ export function ParkingScreen() {
     <div className="pb-20">
       <div className="p-4 space-y-4">
         <div>
-          <h2 className="text-lg mb-1">{t('parking')}</h2>
-          <p className="text-sm text-muted-foreground">{t('scanCardEntry')}</p>
+          <h2 className="text-lg mb-1">
+            {t('parking')}
+          </h2>
+
+          <p className="text-sm text-muted-foreground">
+            {t('scanCardEntry')}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-3">
@@ -249,10 +350,17 @@ export function ParkingScreen() {
               <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
                 <ArrowRight className="w-6 h-6" />
               </div>
+
               <MapPin className="w-5 h-5 text-white/70" />
             </div>
-            <h3 className="text-lg mb-1">{t('enterNow')}</h3>
-            <p className="text-sm text-white/80">{t('scantogoin')}</p>
+
+            <h3 className="text-lg mb-1">
+              {t('enterNow')}
+            </h3>
+
+            <p className="text-sm text-white/80">
+              {t('scantogoin')}
+            </p>
           </button>
 
           <button
@@ -263,10 +371,17 @@ export function ParkingScreen() {
               <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
                 <ArrowLeft className="w-6 h-6" />
               </div>
+
               <MapPin className="w-5 h-5 text-white/70" />
             </div>
-            <h3 className="text-lg mb-1">{t('exitNow')}</h3>
-            <p className="text-sm text-white/80">{t('scantogoout')}</p>
+
+            <h3 className="text-lg mb-1">
+              {t('exitNow')}
+            </h3>
+
+            <p className="text-sm text-white/80">
+              {t('scantogoout')}
+            </p>
           </button>
 
           <button
@@ -278,34 +393,63 @@ export function ParkingScreen() {
                 <Ticket className="w-6 h-6" />
               </div>
             </div>
-            <h3 className="text-lg mb-1">{t('issueTemporaryTicket')}</h3>
-            <p className="text-sm text-primary/70">{t('forguests')}</p>
+
+            <h3 className="text-lg mb-1">
+              {t('issueTemporaryTicket')}
+            </h3>
+
+            <p className="text-sm text-primary/70">
+              {t('forguests')}
+            </p>
           </button>
         </div>
 
         <div>
-          <h3 className="text-sm mb-3">{t('realTimeStatus')}</h3>
+          <h3 className="text-sm mb-3">
+            {t('realTimeStatus')}
+          </h3>
+
           <div className="grid grid-cols-2 gap-3">
             {parkingLots.map((lot) => (
-              <div key={lot.id} className="bg-white rounded-lg border border-border p-3">
-                <h4 className="text-sm text-primary mb-2">{lot.name}</h4>
+              <div
+                key={lot.id}
+                className="bg-white rounded-lg border border-border p-3"
+              >
+                <h4 className="text-sm text-primary mb-2">
+                  {lot.name}
+                </h4>
+
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground">{t('available')}</span>
-                    <span className="text-[#10b981] font-medium">{lot.available}</span>
+                    <span className="text-muted-foreground">
+                      {t('available')}
+                    </span>
+
+                    <span className="text-[#10b981] font-medium">
+                      {lot.available}
+                    </span>
                   </div>
+
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground">{t('total')}</span>
+                    <span className="text-muted-foreground">
+                      {t('total')}
+                    </span>
+
                     <span>{lot.total}</span>
                   </div>
+
                   <div className="h-1.5 bg-muted rounded-full overflow-hidden mt-2">
                     <div
                       className={`h-full ${
-                        lot.available === 0 ? 'bg-[#dc2626]' :
-                        ((lot.total - lot.available) / lot.total) > 0.8 ? 'bg-[#f59e0b]' :
-                        'bg-[#10b981]'
+                        lot.available === 0
+                          ? 'bg-[#dc2626]'
+                          : ((lot.total - lot.available) / lot.total) > 0.8
+                          ? 'bg-[#f59e0b]'
+                          : 'bg-[#10b981]'
                       }`}
-                      style={{ width: `${((lot.total - lot.available) / lot.total) * 100}%` }}
+                      style={{
+                        width: `${((lot.total - lot.available) / lot.total) * 100}%`
+                      }}
                     />
                   </div>
                 </div>

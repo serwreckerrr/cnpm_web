@@ -2,9 +2,17 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, User, Lock, Sparkles } from 'lucide-react';
 import logo from '../imports/hcmut.png';
+type User = {
+  name: string;
+  studentId: string;
+  role: string;
+  email: string;
+  faculty: string;
+  isGuest: boolean;
+};
 
 interface LoginScreenProps {
-  onLogin: () => void;
+  onLogin: (user: User) => void;
   onGuestLogin: () => void;
 }
 
@@ -16,13 +24,31 @@ export function LoginScreen({ onLogin, onGuestLogin }: LoginScreenProps) {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setIsLoading(true);
 
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 800));
 
     setIsLoading(false);
-    onLogin();
+
+    // hardcode account
+    if (
+      username === 'Phạm Đình Phong' &&
+      password === '2312628'
+    ) {
+      onLogin({
+        name: 'Phạm Đình Phong',
+        studentId: '2312628',
+        role: 'Student',
+        email: 'phong.phamdinh@hcmut.edu.vn',
+        faculty: 'Khoa Khoa học & Kỹ thuật Máy tính',
+        isGuest: false,
+      });
+
+      return;
+    }
+
+    alert('Sai tài khoản hoặc mật khẩu');
   };
 
   const handleGuestLogin = async () => {

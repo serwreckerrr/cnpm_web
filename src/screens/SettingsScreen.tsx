@@ -1,13 +1,23 @@
 import { useState } from 'react';
 import { Settings as SettingsIcon, DollarSign, Database, Users, Bell, Globe, HelpCircle, LogOut, ChevronRight, Save, RefreshCw, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+type User = {
+  name: string;
+  studentId: string;
+  role: string;
+  email: string;
+  faculty: string;
+  isGuest: boolean;
+};
 
 interface SettingsScreenProps {
   onLogout: () => void;
+  user: User | null;
 }
 
 export function SettingsScreen({
   onLogout,
+  user,
 }: SettingsScreenProps) {
   const { t, language, setLanguage } = useLanguage();
   const [activeSection, setActiveSection] = useState<'main' | 'pricing' | 'sync' | 'profile'>('main');
@@ -298,31 +308,35 @@ export function SettingsScreen({
 
           <div className="bg-gradient-to-br from-primary to-[#0052a3] rounded-2xl p-6 text-white text-center">
             <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-medium">
-              NVA
+              {user?.isGuest ? 'G' : 'NVA'}
             </div>
-            <h3 className="text-xl mb-1">Phạm Đình Phong</h3>
-            <p className="text-sm text-white/80 mb-1">2312628</p>
+            <h3 className="text-xl mb-1">
+              {user?.name}
+            </h3>
+            <p className="text-sm text-white/80 mb-1">
+              {user?.studentId}
+            </p>
             <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs">
-              {t('student')}
+              {user?.role}
             </div>
           </div>
 
           <div className="bg-white rounded-lg border border-border overflow-hidden divide-y divide-border">
             <div className="px-4 py-3">
               <p className="text-xs text-muted-foreground mb-1">{t('name')}</p>
-              <p className="text-sm">Phạm Đình Phong</p>
+              <p className="text-sm">{user?.name}</p>
             </div>
             <div className="px-4 py-3">
               <p className="text-xs text-muted-foreground mb-1">{t('studentIdOnly')}</p>
-              <p className="text-sm">2312628</p>
+              <p className="text-sm">{user?.studentId}</p>
             </div>
             <div className="px-4 py-3">
               <p className="text-xs text-muted-foreground mb-1">{t('faculty')}</p>
-              <p className="text-sm">{t('cseFaculty')}</p>
+              <p className="text-sm">{user?.faculty}</p>
             </div>
             <div className="px-4 py-3">
               <p className="text-xs text-muted-foreground mb-1">{t('email')}</p>
-              <p className="text-sm">phong.phamdinh@hcmut.edu.vn</p>
+              <p className="text-sm">{user?.email}</p>
             </div>
             <div className="px-4 py-3">
               <p className="text-xs text-muted-foreground mb-1">{t('bkpayAccount')}</p>

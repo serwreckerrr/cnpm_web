@@ -23,6 +23,7 @@ export function SettingsScreen({
   const [activeSection, setActiveSection] = useState<'main' | 'pricing' | 'sync' | 'profile'>('main');
   const [syncing, setSyncing] = useState(false);
   const [syncResult, setSyncResult] = useState<'success' | null>(null);
+  const isAdmin = user?.role === 'Admin';
 
   const [pricingConfig, setPricingConfig] = useState({
     student: 15000,
@@ -51,6 +52,24 @@ export function SettingsScreen({
   };
 
   if (activeSection === 'pricing') {
+    if (!isAdmin) {
+      return (
+        <div className="p-4">
+          <button
+            onClick={() => setActiveSection('main')}
+            className="text-primary text-sm flex items-center gap-2"
+          >
+            ← {t('settings')}
+          </button>
+
+          <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-sm text-red-700">
+              Bạn không có quyền truy cập mục này.
+            </p>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="pb-20">
         <div className="p-4 space-y-4">
@@ -371,19 +390,21 @@ export function SettingsScreen({
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </button>
 
-          <button
-            onClick={() => setActiveSection('pricing')}
-            className="w-full px-4 py-4 flex items-center gap-3 hover:bg-muted/30 transition-colors"
-          >
-            <div className="w-10 h-10 bg-[#f59e0b]/10 rounded-full flex items-center justify-center">
-              <DollarSign className="w-5 h-5 text-[#f59e0b]" />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="text-sm font-medium">{t('configurePricing')}</p>
-              <p className="text-xs text-muted-foreground">{t('pricingPolicyDesc')}</p>
-            </div>
-            <ChevronRight className="w-5 h-5 text-muted-foreground" />
-          </button>
+          {isAdmin && (
+            <button
+              onClick={() => setActiveSection('pricing')}
+              className="w-full px-4 py-4 flex items-center gap-3 hover:bg-muted/30 transition-colors"
+            >
+              <div className="w-10 h-10 bg-[#f59e0b]/10 rounded-full flex items-center justify-center">
+                <DollarSign className="w-5 h-5 text-[#f59e0b]" />
+              </div>
+              <div className="flex-1 text-left">
+                <p className="text-sm font-medium">{t('configurePricing')}</p>
+                <p className="text-xs text-muted-foreground">{t('pricingPolicyDesc')}</p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-muted-foreground" />
+            </button>
+          )}
 
           <button
             onClick={() => setActiveSection('sync')}

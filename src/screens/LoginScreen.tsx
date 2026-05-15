@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, User, Lock, Sparkles } from 'lucide-react';
 import logo from '../imports/hcmut.png';
+
+type Role = 'Admin' | 'Student' | 'Lecturer' | 'Staff' | 'Guest';
 type User = {
   name: string;
   studentId: string;
-  role: string;
+  role: Role;
   email: string;
   faculty: string;
   isGuest: boolean;
@@ -32,10 +34,7 @@ export function LoginScreen({ onLogin, onGuestLogin }: LoginScreenProps) {
     setIsLoading(false);
 
     // hardcode account
-    if (
-      username === 'Phạm Đình Phong' &&
-      password === '2312628'
-    ) {
+    if (username === 'Phạm Đình Phong' && password === '2312628') {
       onLogin({
         name: 'Phạm Đình Phong',
         studentId: '2312628',
@@ -45,6 +44,18 @@ export function LoginScreen({ onLogin, onGuestLogin }: LoginScreenProps) {
         isGuest: false,
       });
 
+      return;
+    }
+
+    if (username === 'admin' && password === '123456') {
+      onLogin({
+        name: 'Admin',
+        studentId: 'ADMIN001',
+        role: 'Admin',
+        email: 'admin@hcmut.edu.vn',
+        faculty: 'Administration',
+        isGuest: false,
+      });
       return;
     }
 

@@ -131,7 +131,7 @@ const handleLogin = (user: User) => {
   const renderScreen = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <DashboardScreen />;
+        return <DashboardScreen user={currentUser} />;
 
       case 'parking':
         return (
@@ -156,7 +156,7 @@ const handleLogin = (user: User) => {
         );
 
       default:
-        return <DashboardScreen />;
+        return <DashboardScreen user={currentUser} />;
     }
   };
 

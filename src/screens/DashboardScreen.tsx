@@ -2,8 +2,22 @@ import { Car, TrendingUp, DollarSign, BarChart3 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-export function DashboardScreen() {
+type User = {
+  name: string;
+  studentId: string;
+  role: string;
+  email: string;
+  faculty: string;
+  isGuest: boolean;
+};
+
+interface DashboardScreenProps {
+  user: User | null;
+}
+
+export function DashboardScreen({ user }: DashboardScreenProps) {
   const { t } = useLanguage();
+  const isAdmin = user?.role === 'Admin';
 
   const hourlyData = [
     { hour: '6h', vehicles: 120, revenue: 600},
@@ -58,16 +72,18 @@ export function DashboardScreen() {
             <p className="text-xs text-primary/70">{totalOccupied} {t('occupied')}</p>
           </div>
 
-          <div className="bg-[#fef3c7] rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <div className="p-2 bg-white rounded-lg">
-                <DollarSign className="w-5 h-5 text-[#f59e0b]" />
+          {isAdmin && (
+            <div className="bg-[#fef3c7] rounded-lg p-4">
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-2 bg-white rounded-lg">
+                  <DollarSign className="w-5 h-5 text-[#f59e0b]" />
+                </div>
+                <span className="text-2xl text-[#f59e0b]">53640000 VND</span>
               </div>
-              <span className="text-2xl text-[#f59e0b]">53640000 VND</span>
+              <p className="text-sm text-[#92400e]">{t('revenue')}</p>
+              <p className="text-xs text-[#92400e]/70">{t('todayStats')}</p>
             </div>
-            <p className="text-sm text-[#92400e]">{t('revenue')}</p>
-            <p className="text-xs text-[#92400e]/70">{t('todayStats')}</p>
-          </div>
+          )}
 
           <div className="bg-[#e0e7ff] rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
@@ -109,29 +125,31 @@ export function DashboardScreen() {
             </LineChart>
           </ResponsiveContainer>
         </div>
-
-        <div className="bg-white rounded-lg border border-border p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm">{t('revenueTrend')} ({t('thousand')} VND)</h3>
-            <span className="text-xs text-muted-foreground">{t('hourly')}</span>
+        
+        {isAdmin && (
+          <div className="bg-white rounded-lg border border-border p-4">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm">{t('revenueTrend')} ({t('thousand')} VND)</h3>
+              <span className="text-xs text-muted-foreground">{t('hourly')}</span>
+            </div>
+            <ResponsiveContainer width="100%" height={180}>
+              <BarChart data={hourlyData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis dataKey="hour" tick={{ fontSize: 11 }} stroke="#6b7280" />
+                <YAxis tick={{ fontSize: 11 }} stroke="#6b7280" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#fff',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '12px'
+                  }}
+                />
+                <Bar dataKey="revenue" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
-          <ResponsiveContainer width="100%" height={180}>
-            <BarChart data={hourlyData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="hour" tick={{ fontSize: 11 }} stroke="#6b7280" />
-              <YAxis tick={{ fontSize: 11 }} stroke="#6b7280" />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#fff',
-                  border: '1px solid #e5e7eb',
-                  borderRadius: '8px',
-                  fontSize: '12px'
-                }}
-              />
-              <Bar dataKey="revenue" fill="#f59e0b" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        )}
 
         <div>
           <h3 className="text-sm mb-3">{t('realTimeStatus')}</h3>
